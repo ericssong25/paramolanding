@@ -60,6 +60,7 @@ const Contact: React.FC = () => {
         <div className="rounded-3xl border border-gray-200 bg-white shadow-sm p-6 md:p-8">
           <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="subject" value="Solicitud de contacto - Páramo Creativo" />
             <p className="hidden">
               <label>
                 Don’t fill this out: <input name="bot-field" />
