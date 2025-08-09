@@ -142,12 +142,22 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     localStorage.setItem('lang', lang);
     document.documentElement.lang = lang;
+    // Forzar re-render global y refresco suave para textos estáticos fuera de React
+    // (e.g., título del documento o formularios detectados en build)
+    // Evitamos recarga completa si no es necesario.
+    // window.location.reload(); // opción dura; preferimos dispatch de evento
+    window.dispatchEvent(new Event('i18n:changed'));
   }, [lang]);
 
   const value = useMemo<I18nContextValue>(() => ({
     lang,
     setLang,
-    toggleLang: () => setLang(prev => (prev === 'es' ? 'en' : 'es')),
+    toggleLang: () => {
+      const next = lang === 'es' ? 'en' : 'es';
+      setLang(next);
+      // recarga completa solicitada
+      setTimeout(() => window.location.reload(), 0);
+    },
     t: (key) => translations[key]?.[lang] ?? String(key),
   }), [lang]);
 

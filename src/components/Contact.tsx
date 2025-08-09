@@ -3,6 +3,7 @@ import { useI18n } from '../i18n';
 import { Send, Phone } from 'lucide-react';
 
 const WHATSAPP_NUM = '+56959843111';
+const NETLIFY_NOTIFICATION_EMAIL = 'ericssongiannangeli@gmail.com';
 
 const Contact: React.FC = () => {
   const { t } = useI18n();
@@ -38,8 +39,8 @@ const Contact: React.FC = () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: payload.toString(),
       });
-      alert('Gracias, hemos recibido tu solicitud.');
       form.reset();
+      window.location.href = '/gracias';
     } catch (err) {
       console.error(err);
       alert('Ocurrió un error al enviar. Intenta nuevamente.');

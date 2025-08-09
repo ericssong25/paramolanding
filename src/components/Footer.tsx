@@ -103,6 +103,8 @@ const Footer: React.FC = () => {
                   <a
                     key={index}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-[#7546ed] transition-colors duration-300 group"
                     aria-label={social.name}
                   >

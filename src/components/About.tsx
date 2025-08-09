@@ -64,13 +64,13 @@ const About: React.FC = () => {
           <p className="text-lg text-gray-600 font-garet max-w-3xl mx-auto">{t('about.subtitle')}</p>
         </div>
 
-        <div ref={cardsRef} className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div ref={cardsRef} className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 items-stretch">
           {team.map(({ name, role, bio, gradient, initials, Icon }) => (
             <article
               key={name}
-              className="group relative rounded-3xl p-[2px] bg-gradient-to-br from-[#7546ed]/60 to-[#dc89ff]/60 hover:from-[#7546ed] hover:to-[#dc89ff] transition-all duration-300"
+              className="group relative rounded-3xl p-[2px] bg-gradient-to-br from-[#7546ed]/60 to-[#dc89ff]/60 hover:from-[#7546ed] hover:to-[#dc89ff] transition-all duration-300 h-full"
             >
-              <div className="relative rounded-[calc(1.5rem-2px)] bg-white p-8 overflow-hidden shadow-sm group-hover:shadow-2xl transition-shadow">
+              <div className="relative rounded-[calc(1.5rem-2px)] bg-white p-8 overflow-hidden shadow-sm group-hover:shadow-2xl transition-shadow h-full flex flex-col justify-start gap-5 min-h-[240px]">
                 {/* decorative glow */}
                 <div className={`pointer-events-none absolute -bottom-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-30 bg-gradient-to-br ${gradient}`} />
 
@@ -97,7 +97,7 @@ const About: React.FC = () => {
                   </div>
                 </div>
 
-                <p className="text-gray-600 font-garet leading-relaxed">
+                <p className="text-gray-600 font-garet leading-relaxed mt-auto">
                   {name === 'Gabriel Delgado'
                     ? t('about.bio.pm')
                     : name === 'Gabriela Delgado'
