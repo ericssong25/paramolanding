@@ -106,6 +106,21 @@ const translations: Translations = {
   // FAQ
   'faq.title': { es: 'Preguntas frecuentes', en: 'Frequently asked questions' },
   'faq.subtitle': { es: 'Resolvemos dudas sobre alcances, tiempos y forma de trabajo.', en: 'Answers about scope, timelines and how we work.' },
+  // FAQ items (1..7)
+  'faq.q1': { es: '¿Qué tipo de aplicaciones desarrollan?', en: 'What types of applications do you build?' },
+  'faq.a1': { es: 'Creamos sitios y apps web, móviles y de escritorio: inventarios, reservaciones hoteleras, sistemas de turnos, CRMs, gestión de proyectos, e‑commerce, landing pages y más.', en: 'We build web, mobile and desktop apps: inventory systems, hotel bookings, appointment systems, CRMs, project management, e‑commerce, landing pages and more.' },
+  'faq.q2': { es: '¿Cómo trabajan y qué metodología usan?', en: 'How do you work and what methodology do you use?' },
+  'faq.a2': { es: 'Usamos enfoques ágiles (Scrum/Kanban). Trabajamos por sprints cortos, demos semanales y comunicación abierta para iterar rápido y con transparencia.', en: 'We follow agile (Scrum/Kanban) with short sprints, weekly demos and open communication to iterate quickly and transparently.' },
+  'faq.q3': { es: '¿Cuáles son los tiempos de entrega?', en: 'What are the delivery timelines?' },
+  'faq.a3': { es: 'Dependen del alcance: una landing puede tomar 1–2 semanas; un CRM medio 6–10 semanas. Definimos hitos claros y un roadmap al iniciar.', en: 'It depends on scope: a landing page may take 1–2 weeks; a mid‑size CRM 6–10 weeks. We define clear milestones and a roadmap at kickoff.' },
+  'faq.q4': { es: '¿Qué servicios de marketing ofrecen?', en: 'What marketing services do you offer?' },
+  'faq.a4': { es: 'Estrategia de contenido, SEO/SEM, email marketing y campañas en redes: desde propuesta de valor hasta calendario editorial y optimización continua.', en: 'Content strategy, SEO/SEM, email marketing and social campaigns—from value proposition to editorial calendar and ongoing optimization.' },
+  'faq.q5': { es: '¿Pueden ayudar con diseño gráfico y branding?', en: 'Can you help with graphic design and branding?' },
+  'faq.a5': { es: 'Sí. Identidad visual, guías de estilo, UX/UI, material publicitario y assets para redes con consistencia de marca.', en: 'Yes. Visual identity, brand guidelines, UX/UI, marketing collateral and social assets with consistent branding.' },
+  'faq.q6': { es: '¿Realizan edición de videos?', en: 'Do you provide video editing?' },
+  'faq.a6': { es: 'Sí. Edición, motion graphics, subtitulado y formatos para anuncios, landings y redes sociales.', en: 'Yes. Editing, motion graphics, subtitling and formats for ads, landings and social media.' },
+  'faq.q7': { es: '¿Cómo gestionan la estrategia de contenido?', en: 'How do you manage content strategy?' },
+  'faq.a7': { es: 'Investigamos audiencia, definimos tono y pilares de contenido y plan multicanal con analítica para iterar lo que funciona.', en: 'We research audience, define tone and content pillars, build a multichannel plan and iterate using analytics.' },
 
   // Contact
   'contact.title': { es: 'Hablemos de tu proyecto', en: 'Let’s talk about your project' },

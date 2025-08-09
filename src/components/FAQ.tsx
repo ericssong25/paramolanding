@@ -5,35 +5,14 @@ import { useI18n } from '../i18n';
 
 type QA = { q: string; a: string };
 
-const faqs: QA[] = [
-  {
-    q: '¿Qué tipo de aplicaciones desarrollan?',
-    a: 'Creamos sitios y apps web, móviles y de escritorio: inventarios, reservaciones hoteleras, sistemas de turnos, CRMs, gestión de proyectos, e‑commerce, landing pages y más.',
-  },
-  {
-    q: '¿Cómo trabajan y qué metodología usan?',
-    a: 'Usamos enfoques ágiles (Scrum/Kanban). Trabajamos por sprints cortos, demos semanales y comunicación abierta para iterar rápido y con transparencia.',
-  },
-  {
-    q: '¿Cuáles son los tiempos de entrega?',
-    a: 'Dependen del alcance: una landing puede tomar 1–2 semanas; un CRM medio 6–10 semanas. Definimos milestones claros y un roadmap al iniciar.',
-  },
-  {
-    q: '¿Qué servicios de marketing ofrecen?',
-    a: 'Estrategia de contenido, SEO/SEM, email marketing y campañas en redes: desde propuesta de valor hasta calendario editorial y optimización continua.',
-  },
-  {
-    q: '¿Pueden ayudar con diseño gráfico y branding?',
-    a: 'Sí. Identidad visual, guías de estilo, diseño UX/UI, material publicitario y assets para redes con consistencia de marca.',
-  },
-  {
-    q: '¿Realizan edición de videos?',
-    a: 'Sí. Edición, motion graphics, subtitulado y formatos para anuncios sociales, landing pages y reels.',
-  },
-  {
-    q: '¿Cómo gestionan la estrategia de contenido?',
-    a: 'Investigación de audiencia, definición de tono, pilares de contenido y un plan multicanal con analítica para iterar lo que funciona.',
-  },
+const useFaqs = (t: (k: any) => string): QA[] => [
+  { q: t('faq.q1'), a: t('faq.a1') },
+  { q: t('faq.q2'), a: t('faq.a2') },
+  { q: t('faq.q3'), a: t('faq.a3') },
+  { q: t('faq.q4'), a: t('faq.a4') },
+  { q: t('faq.q5'), a: t('faq.a5') },
+  { q: t('faq.q6'), a: t('faq.a6') },
+  { q: t('faq.q7'), a: t('faq.a7') },
 ];
 
 const FAQ: React.FC = () => {
@@ -41,6 +20,7 @@ const FAQ: React.FC = () => {
   const listRef = useRef<HTMLDivElement>(null);
   const [openSet, setOpenSet] = useState<Set<number>>(new Set());
   const { t } = useI18n();
+  const faqs = useFaqs(t as any);
 
   useEffect(() => {
     const elements: Element[] = [];
