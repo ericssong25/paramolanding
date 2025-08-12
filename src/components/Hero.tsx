@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ArrowRight } from 'lucide-react';
 import { useI18n } from '../i18n';
@@ -12,11 +12,22 @@ const Hero: React.FC = () => {
   const statsRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const { t, lang } = useI18n();
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   
   // Particle system dimensions
   const PARTICLE_COUNT = 150; // More particles for better coverage
   const GEOMETRIC_COUNT = 50; // More geometric shapes for variety
   
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)');
+    const handler = () => setIsMobile(mql.matches);
+    handler();
+    mql.addEventListener ? mql.addEventListener('change', handler) : window.addEventListener('resize', handler);
+    return () => {
+      mql.removeEventListener ? mql.removeEventListener('change', handler) : window.removeEventListener('resize', handler);
+    };
+  }, []);
 
   useEffect(() => {
     // Palabras para escribir (en minúsculas)
@@ -90,7 +101,10 @@ const Hero: React.FC = () => {
 
     typeAndEraseLoop();
 
-    // Particle and geometric animation system
+    // Particle and geometric animation system (desktop only)
+    if (isMobile) {
+      return () => { isMounted = false; };
+    }
     let animationFrameId: number;
     const particles: Array<{
       x: number;
@@ -204,10 +218,11 @@ const Hero: React.FC = () => {
         cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [lang]);
+  }, [lang, isMobile]);
 
-  // Subtle parallax for blobs
+  // Subtle parallax for blobs (desktop only)
   useEffect(() => {
+    if (isMobile) return;
     const container = heroRef.current;
     if (!container) return;
     const wraps = container.querySelectorAll<HTMLElement>('.blob-wrap');
@@ -227,12 +242,17 @@ const Hero: React.FC = () => {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [isMobile]);
 
   return (
     <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Ambient blob background */}
+      {/* Background */}
       <div ref={overlayRef} className="absolute inset-0 z-10">
+        {/* Mobile: simple gradient for performance */}
+        {isMobile ? (
+          <div className="absolute inset-0 bg-gradient-to-b from-[#12173b] via-[#1b1f4a] to-[#7546ed]" />
+        ) : (
+          <>
         {/* Base */}
         <div className="absolute inset-0 bg-[#0f122b]" />
         {/* Blobs (distributed and lightly animated) */}
@@ -288,29 +308,33 @@ const Hero: React.FC = () => {
         </div>
         {/* Soft vignette for readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/45" />
+          </>
+        )}
       </div>
 
             {/* Animated Particle and Geometric System */}
-      <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none">
-        <div className="particle-container">
-          {Array.from({ length: PARTICLE_COUNT }).map((_, index) => (
-            <div 
-              key={`particle-${index}`}
-              className="particle"
-              style={{ '--particle-index': index } as React.CSSProperties}
-            />
-          ))}
-          {Array.from({ length: GEOMETRIC_COUNT }).map((_, index) => (
-            <div 
-              key={`geometric-${index}`}
-              className="geometric"
-              style={{ '--geometric-index': index } as React.CSSProperties}
-            />
-          ))}
+      {!isMobile && (
+        <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none">
+          <div className="particle-container">
+            {Array.from({ length: PARTICLE_COUNT }).map((_, index) => (
+              <div 
+                key={`particle-${index}`}
+                className="particle"
+                style={{ '--particle-index': index } as React.CSSProperties}
+              />
+            ))}
+            {Array.from({ length: GEOMETRIC_COUNT }).map((_, index) => (
+              <div 
+                key={`geometric-${index}`}
+                className="geometric"
+                style={{ '--geometric-index': index } as React.CSSProperties}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-20">
         <div className="w-full">
           <div className="w-full lg:max-w-5xl">
             {/* Removed trust badge per request */}
@@ -320,9 +344,10 @@ const Hero: React.FC = () => {
               className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight font-creato mb-6 whitespace-normal sm:whitespace-nowrap"
             >
               {t('hero.title.prefix')} {' '}
+              <br className="md:hidden" />
               <span 
                 ref={typingRef}
-                className="animated-gradient-text whitespace-nowrap border-r-2 border-[#dc89ff] pr-1 align-baseline font-creato"
+                className="animated-gradient-text inline-block md:inline whitespace-nowrap border-r-2 border-[#dc89ff] pr-1 align-baseline font-creato mt-1 md:mt-0"
               >
                 
               </span>
@@ -336,10 +361,10 @@ const Hero: React.FC = () => {
             </p>
 
             <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button className="group bg-gradient-to-r from-[#7546ed] to-[#dc89ff] text-white px-8 py-4 rounded-full hover:from-[#8b66ff] hover:to-[#f0a7ff] hover:brightness-110 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 font-medium text-lg shadow-2xl">
+              <a href="#contact" className="group bg-gradient-to-r from-[#7546ed] to-[#dc89ff] text-white px-8 py-4 rounded-full hover:from-[#8b66ff] hover:to-[#f0a7ff] hover:brightness-110 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 font-medium text-lg shadow-2xl">
                 {t('hero.ctaPrimary')}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </a>
             </div>
 
             {/* metrics removed per request */}

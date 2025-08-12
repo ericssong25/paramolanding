@@ -87,9 +87,9 @@ const Footer: React.FC = () => {
             <div>
               <h4 className="text-lg font-semibold mb-6">{t('footer.getStarted')}</h4>
               <p className="text-gray-300 mb-6">{lang === 'es' ? '¿Listo para elevar tu presencia digital?' : 'Ready to elevate your digital presence?'}</p>
-              <button className="w-full bg-gradient-to-r from-[#7546ed] to-[#dc89ff] text-white px-6 py-3 rounded-full hover:from-[#dc89ff] hover:to-[#7546ed] transition-all duration-300 transform hover:scale-105 font-medium">
+              <a href="#contact" className="w-full bg-gradient-to-r from-[#7546ed] to-[#dc89ff] text-white px-6 py-3 rounded-full hover:from-[#dc89ff] hover:to-[#7546ed] transition-all duration-300 transform hover:scale-105 font-medium text-center block">
                 {t('footer.cta')}
-              </button>
+              </a>
             </div>
           </div>
 
