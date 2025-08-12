@@ -1,12 +1,74 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom font families */
-/* Mapeo de fuentes: Creato Display -> Playfair Display, Garet -> Inter */
-.font-creato { font-family: 'Playfair Display', serif; }
-.font-garet { font-family: 'Inter', sans-serif; }
+/* Font classes */
+.font-creato {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-garet {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Particle system background */
+.particle-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(220, 137, 255, 0.6) 0%, rgba(220, 137, 255, 0.2) 70%, transparent 100%);
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  opacity: 0.3;
+  will-change: transform;
+  filter: blur(0.5px);
+  transform: translate3d(0, 0, 0); /* Force hardware acceleration */
+}
+
+.geometric {
+  position: absolute;
+  background: transparent;
+  border: 2px solid rgba(117, 70, 237, 0.4);
+  width: 20px;
+  height: 20px;
+  opacity: 0.15;
+  will-change: transform;
+  filter: blur(0.3px);
+  box-shadow: 0 0 8px rgba(117, 70, 237, 0.2);
+  transform: translate3d(0, 0, 0); /* Force hardware acceleration */
+}
+
+.geometric[data-type="triangle"] {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.geometric[data-type="square"] {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.geometric[data-type="diamond"] {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+/* Responsive particle adjustments */
+@media (max-width: 1024px) {
+  .particle { transform: scale(0.9); }
+}
+
+@media (max-width: 768px) {
+  .particle { transform: scale(0.8); }
+}
+
+@media (max-width: 480px) {
+  .particle { transform: scale(0.7); }
+}
 
 /* Smooth scrolling */
 html {
@@ -66,4 +128,51 @@ img {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Animated gradient text with shimmer effect */
+.animated-gradient-text {
+  background: linear-gradient(
+    90deg,
+    #dc89ff 0%,
+    #b1a9e5 25%,
+    #7546ed 50%,
+    #dc89ff 75%,
+    #b1a9e5 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  50% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Hero blob animation */
+.hero-blob {
+  animation: blobDrift var(--duration, 28s) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes blobDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(36px, -28px, 0) scale(1.06);
+  }
+  100% {
+    transform: translate3d(-28px, 24px, 0) scale(1);
+  }
 }

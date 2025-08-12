@@ -4,6 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Simple SPA fallback for static hosts: redirect full path to hash
+      (function() {
+        // Si el portafolio está deshabilitado, no redirigir rutas de case
+        try {
+          var config = { portfolioEnabled: false };
+          if (!config.portfolioEnabled && window.location.pathname.startsWith('/case/')) {
+            window.location.replace('/');
+            return;
+          }
+        } catch (e) {}
+        var path = window.location.pathname;
+        if (path.startsWith('/case/')) {
+          var newHash = '#' + path;
+          if (window.location.hash !== newHash) {
+            window.location.replace(newHash);
+          }
+        }
+      })();
+    </script>
     <title>Páramo Creativo - Agencia de marketing</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

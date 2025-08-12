@@ -26,57 +26,31 @@ const Portfolio: React.FC = () => {
 
   const projects = [
     {
-      category: "Marketing",
-      title: "Revolución digital TechCorp",
-      description: "Transformación de marca con un aumento del 400% en engagement",
+      category: "Diseño",
+      title: "Gestión integral de redes sociales",
+      description: "Estrategia completa de redes sociales con diseño gráfico personalizado, gestión de contenido y campañas que aumentaron el engagement en un 400%",
       image: "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800",
       color: "from-[#7546ed] to-[#dc89ff]",
       stats: "+400% engagement",
       featured: true
     },
     {
-      category: "Desarrollo",
-      title: "Potencia e‑commerce",
-      description: "Experiencia de compra de próxima generación con recomendaciones por IA",
+      category: "Aplicación web",
+      title: "Sistema de gestión de remesas",
+      description: "Plataforma web y móvil automatizada para gestión integral de remesas, cálculo de tasas, comisiones y transferencias internacionales con tecnología de vanguardia",
       image: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
       color: "from-[#12173b] to-[#7546ed]",
       stats: "2M+ usuarios",
-      featured: true
+      featured: true,
+      href: "#/case/web-app"
     },
     {
       category: "Diseño",
-      title: "Identidad de marca de lujo",
-      description: "Sistema visual sofisticado para mercado premium",
+      title: "Identidad de marca Eclipse eSports",
+      description: "Branding completo para equipo femenino de eSports Eclipse. Identidad visual, logo, paleta de colores y assets optimizados para gaming y redes sociales",
       image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800",
       color: "from-[#dc89ff] to-[#b1a9e5]",
       stats: "premio ganador",
-      featured: false
-    },
-    {
-      category: "Video",
-      title: "Narrativa corporativa",
-      description: "Videos de marca cinematográficos que cautivan audiencias",
-      image: "https://images.pexels.com/photos/3205738/pexels-photo-3205738.jpeg?auto=compress&cs=tinysrgb&w=800",
-      color: "from-[#b1a9e5] to-[#7546ed]",
-      stats: "10M+ vistas",
-      featured: false
-    },
-    {
-      category: "Desarrollo",
-      title: "App móvil fintech",
-      description: "Aplicación bancaria segura con autenticación biométrica",
-      image: "https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=800",
-      color: "from-[#032c7d] to-[#12173b]",
-      stats: "seguridad bancaria",
-      featured: false
-    },
-    {
-      category: "Marketing",
-      title: "Lanzamiento de campaña viral",
-      description: "Estrategia en redes sociales que rompió internet",
-      image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
-      color: "from-[#7546ed] to-[#032c7d]",
-      stats: "50M+ alcance",
       featured: false
     }
   ];
@@ -125,61 +99,59 @@ const Portfolio: React.FC = () => {
 
         {/* Projects Grid */}
         <div ref={projectsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {allProjects.map((project, index) => (
-            <div
-              key={project.title}
-              className={`group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2`}
-            >
-              <div className={`relative overflow-hidden h-64`}>
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                
-                {/* Gradient Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-90 transition-opacity duration-500 flex items-center justify-center`}>
-                  <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <ExternalLink className="w-12 h-12 mx-auto mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200" />
-                     <p className="text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300">
-                      {t('portfolio.viewProject')}
-                    </p>
+          {allProjects.map((project, index) => {
+            const CardTag: any = project.href ? 'a' : 'div';
+            const cardProps: any = project.href ? { href: project.href } : {};
+            return (
+              <CardTag
+                key={project.title}
+                {...cardProps}
+                className={`group block relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7546ed]/40`}
+              >
+                <div className={`relative overflow-hidden h-64`}>
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  
+                  {/* Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-90 transition-opacity duration-500 flex items-center justify-center`}>
+                    <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      <ExternalLink className="w-12 h-12 mx-auto mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200" />
+                       <p className="text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300">
+                        {t('portfolio.viewProject')}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Stats Badge */}
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-[#12173b] px-3 py-1 rounded-full text-sm font-semibold">
+                    {project.stats}
                   </div>
                 </div>
 
-                {/* Stats Badge */}
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-[#12173b] px-3 py-1 rounded-full text-sm font-semibold">
-                  {project.stats}
-                </div>
-
-                {/* Featured Badge */}
-                {project.featured && (
-                  <div className="absolute top-4 left-4 bg-[#dc89ff] text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    Featured
+                <div className="p-8">
+                   <div className="text-sm text-[#7546ed] font-medium mb-3 uppercase tracking-wider">
+                    {project.category}
                   </div>
-                )}
-              </div>
-
-              <div className="p-8">
-                 <div className="text-sm text-[#7546ed] font-medium mb-3 uppercase tracking-wider">
-                  {project.category}
+                  <h3 className="text-2xl font-bold text-[#12173b] mb-4 group-hover:text-[#7546ed] transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+                  <div className="flex items-center gap-2 text-[#7546ed] font-semibold group-hover:text-[#12173b] transition-colors group-hover:gap-3 duration-300">
+                    Explorar caso de estudio
+                    <ArrowUpRight className="w-5 h-5 transform group-hover:rotate-45 transition-transform duration-300" />
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-[#12173b] mb-4 group-hover:text-[#7546ed] transition-colors duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  {project.description}
-                </p>
-                 <button className="flex items-center gap-2 text-[#7546ed] font-semibold hover:text-[#12173b] transition-colors group-hover:gap-3 duration-300">
-                  {t('portfolio.caseStudy')}
-                  <ArrowUpRight className="w-5 h-5 transform group-hover:rotate-45 transition-transform duration-300" />
-                </button>
-              </div>
 
-              {/* Hover Border Effect */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#7546ed]/30 rounded-3xl transition-colors duration-500"></div>
-            </div>
-          ))}
+                {/* Hover Border Effect */}
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#7546ed]/30 rounded-3xl transition-colors duration-500"></div>
+              </CardTag>
+            );
+          })}
         </div>
 
         {/* CTA Section removed per request */}

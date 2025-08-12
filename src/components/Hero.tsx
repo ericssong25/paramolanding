@@ -12,6 +12,11 @@ const Hero: React.FC = () => {
   const statsRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const { t, lang } = useI18n();
+  
+  // Particle system dimensions
+  const PARTICLE_COUNT = 150; // More particles for better coverage
+  const GEOMETRIC_COUNT = 50; // More geometric shapes for variety
+  
 
   useEffect(() => {
     // Palabras para escribir (en minúsculas)
@@ -85,43 +90,225 @@ const Hero: React.FC = () => {
 
     typeAndEraseLoop();
 
-    // Parallax effect for background
-    const handleScroll = () => {
-      const scrolled = window.pageYOffset;
-      const parallax = heroRef.current?.querySelector('.hero-bg') as HTMLElement;
-      if (parallax) {
-        parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
-      }
+    // Particle and geometric animation system
+    let animationFrameId: number;
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      opacity: number;
+    }> = [];
+
+    const geometrics: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      opacity: number;
+      rotation: number;
+      rotationSpeed: number;
+      type: 'triangle' | 'square' | 'diamond';
+    }> = [];
+
+    // Initialize particles with better distribution
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - 0.5) * 0.8, // Faster for smoother motion
+        vy: (Math.random() - 0.5) * 0.8,
+        size: Math.random() * 5 + 2, // Slightly larger range
+        opacity: Math.random() * 0.35 + 0.1 // Range: 0.1 to 0.45
+      });
+    }
+
+    // Initialize geometric shapes with better distribution
+    for (let i = 0; i < GEOMETRIC_COUNT; i++) {
+      geometrics.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - 0.5) * 0.6, // Faster for smoother motion
+        vy: (Math.random() - 0.5) * 0.6,
+        size: Math.random() * 25 + 12, // Larger size range
+        opacity: Math.random() * 0.35 + 0.1, // Range: 0.1 to 0.45
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 4, // Faster rotation for smoother effect
+        type: ['triangle', 'square', 'diamond'][Math.floor(Math.random() * 3)] as 'triangle' | 'square' | 'diamond'
+      });
+    }
+
+    const animateParticles = () => {
+      const particleElements = heroRef.current?.querySelectorAll('.particle') as NodeListOf<HTMLElement>;
+      const geometricElements = heroRef.current?.querySelectorAll('.geometric') as NodeListOf<HTMLElement>;
+      
+      if (!particleElements || !geometricElements) return;
+
+      // Use transform3d for hardware acceleration
+      const updateElement = (element: HTMLElement, x: number, y: number, size?: number, rotation?: number) => {
+        element.style.transform = `translate3d(${x}px, ${y}px, 0)${rotation ? ` rotate(${rotation}deg)` : ''}`;
+        if (size) {
+          element.style.width = `${size}px`;
+          element.style.height = `${size}px`;
+        }
+      };
+
+      // Animate particles with optimized updates
+      particles.forEach((particle, index) => {
+        const element = particleElements[index];
+        if (!element) return;
+
+        // Update position
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+
+        // Bounce off edges
+        if (particle.x <= 0 || particle.x >= window.innerWidth) particle.vx *= -1;
+        if (particle.y <= 0 || particle.y >= window.innerHeight) particle.vy *= -1;
+
+        // Apply position with hardware acceleration
+        updateElement(element, particle.x, particle.y, particle.size);
+      });
+
+      // Animate geometric shapes with optimized updates
+      geometrics.forEach((geometric, index) => {
+        const element = geometricElements[index];
+        if (!element) return;
+
+        // Update position and rotation
+        geometric.x += geometric.vx;
+        geometric.y += geometric.vy;
+        geometric.rotation += geometric.rotationSpeed;
+
+        // Bounce off edges
+        if (geometric.x <= 0 || geometric.x >= window.innerWidth) geometric.vx *= -1;
+        if (geometric.y <= 0 || geometric.y >= window.innerHeight) geometric.vy *= -1;
+
+        // Apply position, size, rotation with hardware acceleration
+        updateElement(element, geometric.x, geometric.y, geometric.size, geometric.rotation);
+        element.setAttribute('data-type', geometric.type);
+      });
+
+      animationFrameId = requestAnimationFrame(animateParticles);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    animateParticles();
+
+    // Remove mouse event listener since we don't need it anymore
+    
     return () => {
       isMounted = false;
-      window.removeEventListener('scroll', handleScroll);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
   }, [lang]);
 
+  // Subtle parallax for blobs
+  useEffect(() => {
+    const container = heroRef.current;
+    if (!container) return;
+    const wraps = container.querySelectorAll<HTMLElement>('.blob-wrap');
+
+    const onScroll = () => {
+      const rect = container.getBoundingClientRect();
+      const viewportH = window.innerHeight || document.documentElement.clientHeight;
+      const progress = 1 - Math.min(Math.max((rect.top + rect.height / 2) / (viewportH + rect.height), 0), 1);
+      wraps.forEach((el) => {
+        const speedAttr = el.getAttribute('data-speed');
+        const speed = speedAttr ? parseFloat(speedAttr) : 0.03;
+        const translateY = (progress - 0.5) * 100 * speed; // small shift
+        const translateX = (progress - 0.5) * 60 * speed;
+        el.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <section ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image with Parallax */}
-      <div className="hero-bg absolute inset-0 z-0">
-        <img
-          src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1920"
-          alt="Creative workspace"
-          className="w-full h-full object-cover scale-110"
-        />
+      {/* Ambient blob background */}
+      <div ref={overlayRef} className="absolute inset-0 z-10">
+        {/* Base */}
+        <div className="absolute inset-0 bg-[#0f122b]" />
+        {/* Blobs (distributed and lightly animated) */}
+        <div className="blob-wrap pointer-events-none absolute -top-24 -left-24 w-[38vw] h-[38vw]" data-speed="0.10">
+          <div
+            className="hero-blob w-full h-full opacity-40 blur-3xl"
+            style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(79,30,220,0.9) 0%, rgba(79,30,220,0) 70%)',
+                     // @ts-ignore
+                     ['--duration' as any]: '32s' }}
+          />
+        </div>
+        <div className="blob-wrap pointer-events-none absolute top-[12vh] right-[-10vw] w-[30vw] h-[30vw]" data-speed="0.08">
+          <div
+            className="hero-blob w-full h-full opacity-35 blur-3xl"
+            style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(106,63,224,0.85) 0%, rgba(106,63,224,0) 70%)',
+                     // @ts-ignore
+                     ['--duration' as any]: '28s' }}
+          />
+        </div>
+        <div className="blob-wrap pointer-events-none absolute bottom-[-10vw] left-[8vw] w-[34vw] h-[34vw]" data-speed="0.06">
+          <div
+            className="hero-blob w-full h-full opacity-35 blur-3xl"
+            style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(220,137,255,0.85) 0%, rgba(220,137,255,0) 70%)',
+                     // @ts-ignore
+                     ['--duration' as any]: '30s' }}
+          />
+        </div>
+        <div className="blob-wrap pointer-events-none absolute bottom-[6vh] right-[6vw] w-[28vw] h-[28vw]" data-speed="0.09">
+          <div
+            className="hero-blob w-full h-full opacity-30 blur-3xl"
+            style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(177,169,229,0.85) 0%, rgba(177,169,229,0) 70%)',
+                     // @ts-ignore
+                     ['--duration' as any]: '34s' }}
+          />
+        </div>
+        {/* Center soft blob to unify background */}
+        <div className="blob-wrap pointer-events-none absolute top-1/2 left-1/2 w-[30vw] h-[30vw] -translate-x-1/2 -translate-y-1/2" data-speed="0.05">
+          <div
+            className="hero-blob w-full h-full opacity-25 blur-2xl"
+            style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(124,87,255,0.6) 0%, rgba(124,87,255,0) 70%)',
+                     // @ts-ignore
+                     ['--duration' as any]: '40s' }}
+          />
+        </div>
+        {/* Extra lighter accents */}
+        <div className="blob-wrap pointer-events-none absolute top-[10vh] left-[40vw] w-[18vw] h-[18vw]" data-speed="0.04">
+          <div
+            className="hero-blob w-full h-full opacity-20 blur-2xl"
+            style={{ background: 'radial-gradient(50% 50% at 50% 50%, rgba(236, 209, 255, 0.8) 0%, rgba(236,209,255,0) 70%)',
+                     // @ts-ignore
+                     ['--duration' as any]: '36s' }}
+          />
+        </div>
+        {/* Soft vignette for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/45" />
       </div>
-      
-      {/* Gradient Overlay */}
-      <div 
-        ref={overlayRef}
-        className="absolute inset-0 bg-gradient-to-br from-[#12173b]/90 via-[#12173b]/80 to-[#7546ed]/70 z-10"
-      ></div>
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 right-20 w-32 h-32 bg-[#dc89ff]/20 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute bottom-32 left-16 w-24 h-24 bg-[#b1a9e5]/30 rounded-full blur-lg animate-pulse delay-1000"></div>
-      <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-[#7546ed]/25 rounded-full blur-md animate-pulse delay-500"></div>
+            {/* Animated Particle and Geometric System */}
+      <div className="absolute inset-0 z-[15] overflow-hidden pointer-events-none">
+        <div className="particle-container">
+          {Array.from({ length: PARTICLE_COUNT }).map((_, index) => (
+            <div 
+              key={`particle-${index}`}
+              className="particle"
+              style={{ '--particle-index': index } as React.CSSProperties}
+            />
+          ))}
+          {Array.from({ length: GEOMETRIC_COUNT }).map((_, index) => (
+            <div 
+              key={`geometric-${index}`}
+              className="geometric"
+              style={{ '--geometric-index': index } as React.CSSProperties}
+            />
+          ))}
+        </div>
+      </div>
 
       <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="w-full">
@@ -135,7 +322,7 @@ const Hero: React.FC = () => {
               {t('hero.title.prefix')} {' '}
               <span 
                 ref={typingRef}
-                className="text-[#dc89ff] whitespace-nowrap border-r-2 border-[#dc89ff] animate-pulse pr-1 align-baseline font-creato"
+                className="animated-gradient-text whitespace-nowrap border-r-2 border-[#dc89ff] pr-1 align-baseline font-creato"
               >
                 
               </span>

@@ -6,40 +6,47 @@ import { useI18n } from '../i18n';
 
 type ServiceItem = {
   icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
+  titleKey: string;
+  descKey: string;
+  href?: string;
 };
 
 const baseServices: ServiceItem[] = [
   {
     icon: Megaphone,
-    title: 'Digital Marketing',
-    description: 'Campaigns that drive traffic, engagement, and measurable growth.'
+    titleKey: 'services.item.marketing.title',
+    descKey: 'services.item.marketing.desc',
+    href: '#contact',
   },
   {
     icon: Palette,
-    title: 'Brand & Design',
-    description: 'Elegant visual systems and identities that resonate with audiences.'
+    titleKey: 'services.item.design.title',
+    descKey: 'services.item.design.desc',
+    href: '#contact',
   },
   {
     icon: Code2,
-    title: 'Web Development',
-    description: 'Fast, accessible, and scalable web apps built with modern tech.'
+    titleKey: 'services.item.web.title',
+    descKey: 'services.item.web.desc',
+    href: '#contact',
   },
   {
     icon: Video,
-    title: 'Video Production',
-    description: 'Cinematic storytelling that elevates your brand presence.'
+    titleKey: 'services.item.video.title',
+    descKey: 'services.item.video.desc',
+    href: '#contact',
   },
   {
     icon: Smartphone,
-    title: 'Mobile Apps',
-    description: 'Delightful iOS and Android experiences focused on usability.'
+    titleKey: 'services.item.mobile.title',
+    descKey: 'services.item.mobile.desc',
+    href: '#contact',
   },
   {
     icon: BarChart3,
-    title: 'Analytics & SEO',
-    description: 'Data-driven insights and optimization to scale what works.'
+    titleKey: 'services.item.analytics.title',
+    descKey: 'services.item.analytics.desc',
+    href: '#contact',
   }
 ];
 
@@ -47,18 +54,40 @@ const Services: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
-  const { t, lang } = useI18n();
+  const { t } = useI18n();
 
   useEffect(() => {
-    const elements: Element[] = [];
-    if (titleRef.current) elements.push(titleRef.current);
-    if (gridRef.current) elements.push(...Array.from(gridRef.current.children));
+    const animateIn = () => {
+      const elements: Element[] = [];
+      if (titleRef.current) elements.push(titleRef.current);
+      if (gridRef.current) elements.push(...Array.from(gridRef.current.children));
+      gsap.fromTo(
+        elements,
+        { opacity: 0, scale: 0.98 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out', stagger: 0.05 }
+      );
+    };
 
-    gsap.fromTo(
-      elements,
-      { opacity: 0, scale: 0.98 },
-      { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out', stagger: 0.05 }
-    );
+    const section = sectionRef.current;
+    if (!section) return;
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const [entry] = entries;
+          if (entry.isIntersecting) {
+            animateIn();
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.2 }
+      );
+      observer.observe(section);
+      return () => observer.disconnect();
+    }
+
+    // Fallback
+    animateIn();
   }, []);
 
   return (
@@ -83,48 +112,47 @@ const Services: React.FC = () => {
 
         <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {baseServices.map((service, idx) => {
-            const titleKeys = [
-              'services.item.marketing.title',
-              'services.item.design.title',
-              'services.item.web.title',
-              'services.item.video.title',
-              'services.item.mobile.title',
-              'services.item.analytics.title',
-            ] as const;
-            const descKeys = [
-              'services.item.marketing.desc',
-              'services.item.design.desc',
-              'services.item.web.desc',
-              'services.item.video.desc',
-              'services.item.mobile.desc',
-              'services.item.analytics.desc',
-            ] as const;
-            const title = (t as any)(titleKeys[idx]);
-            const desc = (t as any)(descKeys[idx]);
+            const title = (t as any)(service.titleKey);
+            const desc = (t as any)(service.descKey);
+            const titleId = `service-title-${idx}`;
+            const descId = `service-desc-${idx}`;
             return (
-            <div
-              key={service.title}
-              className="group relative bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
-            >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#7546ed]/5 to-[#dc89ff]/10" />
+              <a
+                key={service.titleKey}
+                href={service.href ?? '#contact'}
+                aria-labelledby={titleId}
+                aria-describedby={descId}
+                className="group block relative bg-gradient-to-br from-[#4f1edc] via-[#6a3fe0] to-[#dc89ff] rounded-[2rem] border-2 border-b-0 border-white/30 shadow-xl hover:shadow-2xl transition-all duration-700 overflow-hidden transform hover:scale-105 hover:-translate-y-2 min-h-[20rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 flex flex-col"
+              >
+                {/* Geometric accent */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl group-hover:bg-white/20 transition-all duration-700" />
+                <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-white/5 rounded-full blur-lg group-hover:bg-white/15 transition-all duration-700" />
 
-              <div className="p-8 relative">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7546ed] to-[#dc89ff] text-white flex items-center justify-center shadow-lg shadow-[#7546ed]/20">
-                  <service.icon className="w-6 h-6" />
+                <div className="relative p-8 flex-1">
+                  {/* Icon container with unique shape */}
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-white/15 backdrop-blur-md text-white flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-700 transform group-hover:scale-110 group-hover:rotate-12 border border-white/40 rounded-2xl">
+                      <service.icon className="w-7 h-7" />
+                    </div>
+                    {/* Floating accent */}
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-white/20 rounded-full blur-sm group-hover:bg-white/30 transition-all duration-700" />
+                  </div>
+
+                  <h3 id={titleId} className="mt-8 text-2xl font-bold text-white group-hover:text-white/90 transition-colors duration-700">
+                    {title}
+                  </h3>
+                  <p id={descId} className="mt-4 text-white/80 leading-relaxed group-hover:text-white transition-colors duration-700">
+                    {desc}
+                  </p>
+
                 </div>
-                <h3 className="mt-6 text-2xl font-bold text-[#12173b] group-hover:text-[#7546ed] transition-colors">
-                  {title}
-                </h3>
-                <p className="mt-3 text-gray-600 leading-relaxed">
-                  {desc}
-                </p>
 
-                <div className="mt-6 inline-flex items-center gap-2 text-[#7546ed] font-semibold">
+                {/* CTA aligned to bottom */}
+                <div className="mt-auto inline-flex items-center justify-center gap-3 text-white font-semibold group-hover:text-white/90 transition-colors duration-700 bg-white/5 group-hover:bg-white/10 backdrop-blur-sm py-4 rounded-b-[2rem] border-t border-white/20 group-hover:border-white/40">
                   {t('services.learnMore')}
-                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                  <span className="transition-transform group-hover:scale-110 duration-700 ml-1">→</span>
                 </div>
-              </div>
-            </div>
+              </a>
             );
           })}
         </div>

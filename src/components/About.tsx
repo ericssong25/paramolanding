@@ -64,40 +64,41 @@ const About: React.FC = () => {
           <p className="text-lg text-gray-600 font-garet max-w-3xl mx-auto">{t('about.subtitle')}</p>
         </div>
 
-        <div ref={cardsRef} className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+        <div ref={cardsRef} className="grid gap-8 md:grid-cols-3 items-stretch">
           {team.map(({ name, role, bio, gradient, initials, Icon }) => (
             <article
               key={name}
               className="group relative rounded-3xl p-[2px] bg-gradient-to-br from-[#7546ed]/60 to-[#dc89ff]/60 hover:from-[#7546ed] hover:to-[#dc89ff] transition-all duration-300 h-full"
             >
-              <div className="relative rounded-[calc(1.5rem-2px)] bg-white p-8 overflow-hidden shadow-sm group-hover:shadow-2xl transition-shadow h-full flex flex-col justify-start gap-5 min-h-[240px]">
+              <div className="relative rounded-[calc(1.5rem-2px)] bg-white p-6 overflow-hidden shadow-sm group-hover:shadow-2xl transition-shadow h-full flex flex-col justify-start gap-5 min-h-[280px]">
                 {/* decorative glow */}
                 <div className={`pointer-events-none absolute -bottom-10 -right-10 w-40 h-40 rounded-full blur-3xl opacity-30 bg-gradient-to-br ${gradient}`} />
 
-                {/* header */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center gap-4">
-                    {/* avatar placeholder */}
-                    <div className="relative">
-                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} p-[2px]`}> 
-                        <div className="w-full h-full rounded-[1rem] bg-white flex items-center justify-center">
-                          <span className="font-creato font-bold text-lg text-[#12173b]">{initials}</span>
-                        </div>
-                      </div>
-                      {/* subtle ring */}
-                      <div className="absolute inset-0 rounded-2xl ring-1 ring-black/5" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-creato font-bold leading-tight group-hover:text-[#7546ed] transition-colors">{name}</h3>
-                      <div className="mt-1 inline-flex items-center gap-2 text-[#7546ed] font-medium">
-                        <Icon className="w-4 h-4" />
-                        <span>{role}</span>
+                {/* header vertical centrado */}
+                <div className="flex flex-col items-center text-center mb-4">
+                  {/* avatar grande */}
+                  <div className="relative mb-4">
+                    <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${gradient} p-[3px]`}> 
+                      <div className="w-full h-full rounded-[1rem] bg-white flex items-center justify-center">
+                        <span className="font-creato font-bold text-2xl text-[#12173b]">{initials}</span>
                       </div>
                     </div>
+                    <div className="absolute inset-0 rounded-2xl ring-1 ring-black/5" />
+                  </div>
+                  <h3 className="text-2xl font-creato font-bold leading-tight group-hover:text-[#7546ed] transition-colors">{name}</h3>
+                  <div className="mt-1 inline-flex items-center justify-center gap-2 text-[#7546ed] font-medium">
+                    <Icon className="w-4 h-4" />
+                    <span>
+                      {name === 'Gabriel Delgado'
+                        ? t('about.role.pm')
+                        : name === 'Gabriela Delgado'
+                        ? t('about.role.designer')
+                        : t('about.role.dev')}
+                    </span>
                   </div>
                 </div>
 
-                <p className="text-gray-600 font-garet leading-relaxed mt-auto">
+                <p className="text-gray-600 font-garet leading-relaxed mt-2 text-center">
                   {name === 'Gabriel Delgado'
                     ? t('about.bio.pm')
                     : name === 'Gabriela Delgado'

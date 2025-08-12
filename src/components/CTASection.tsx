@@ -50,14 +50,14 @@ const CTASection: React.FC = () => {
           )}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="group bg-white text-[#12173b] px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+            <a href="#contact" className="group bg-white text-[#12173b] px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
               {t('cta.primary')}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
             
-            <button className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-[#12173b] transition-all duración-300">
+            <a href="#contact" className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-[#12173b] transition-all duración-300">
               {t('cta.secondary')}
-            </button>
+            </a>
           </div>
 
           <p className="text-sm opacity-75 mt-6">{t('cta.note')}</p>

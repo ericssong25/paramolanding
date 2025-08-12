@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Menu, X } from 'lucide-react';
 import { useI18n } from '../i18n';
+import { FEATURES } from '../config';
 
 const Header: React.FC = () => {
   const headerRef = useRef<HTMLHeaderElement>(null);
@@ -17,8 +18,8 @@ const Header: React.FC = () => {
 
   const navigation = [
     { name: t('header.nav.services'), href: '#services' },
-    { name: t('header.nav.portfolio'), href: '#portfolio' },
-    { name: t('header.nav.about'), href: '#about' },
+    ...(FEATURES.portfolioEnabled ? [{ name: t('header.nav.portfolio'), href: '#portfolio' }] : []),
+    { name: t('header.nav.team'), href: '#about' },
     { name: t('header.nav.faq'), href: '#faq' },
     { name: t('header.nav.contact'), href: '#contact' }
   ];
@@ -68,9 +69,9 @@ const Header: React.FC = () => {
               >
                 {t('header.lang')}
               </button>
-              <button className="bg-[#7546ed] text-white px-6 py-2 rounded-full hover:bg-[#12173b] transition-all duration-300 transform hover:scale-105 font-medium">
+              <a href="#contact" className="bg-[#7546ed] text-white px-6 py-2 rounded-full hover:bg-[#12173b] transition-all duration-300 transform hover:scale-105 font-medium">
                 {t('header.cta')}
-              </button>
+              </a>
             </div>
           </div>
 

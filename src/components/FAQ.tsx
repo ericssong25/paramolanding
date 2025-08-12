@@ -11,14 +11,13 @@ const useFaqs = (t: (k: any) => string): QA[] => [
   { q: t('faq.q3'), a: t('faq.a3') },
   { q: t('faq.q4'), a: t('faq.a4') },
   { q: t('faq.q5'), a: t('faq.a5') },
-  { q: t('faq.q6'), a: t('faq.a6') },
   { q: t('faq.q7'), a: t('faq.a7') },
 ];
 
 const FAQ: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const [openSet, setOpenSet] = useState<Set<number>>(new Set());
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { t } = useI18n();
   const faqs = useFaqs(t as any);
 
@@ -38,17 +37,11 @@ const FAQ: React.FC = () => {
         </div>
         <div ref={listRef} className="space-y-4">
           {faqs.map((item, idx) => {
-            const isOpen = openSet.has(idx);
+            const isOpen = openIndex === idx;
             return (
               <div key={idx} className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden">
                 <button
-                  onClick={() =>
-                    setOpenSet(prev => {
-                      const next = new Set(prev);
-                      if (next.has(idx)) next.delete(idx); else next.add(idx);
-                      return next;
-                    })
-                  }
+                  onClick={() => setOpenIndex(prev => (prev === idx ? null : idx))}
                   className="w-full flex items-center justify-between text-left px-6 py-5 hover:bg-white/10 transition-colors"
                   aria-expanded={isOpen}
                 >
@@ -56,7 +49,10 @@ const FAQ: React.FC = () => {
                   {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
                 </button>
                 <AnimatedAnswer open={isOpen}>
-                  <p className="text-white/80 font-garet leading-relaxed pl-6 pr-6 pb-5">{item.a}</p>
+                  <p
+                    className="text-white/80 font-garet leading-relaxed pl-6 pr-6 pb-5"
+                    dangerouslySetInnerHTML={{ __html: item.a }}
+                  />
                 </AnimatedAnswer>
               </div>
             );
