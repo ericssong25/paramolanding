@@ -127,7 +127,7 @@ const translations: Translations = {
   'contact.firstName': { es: 'Nombre', en: 'First name' },
   'contact.lastName': { es: 'Apellido', en: 'Last name' },
   'contact.phone': { es: 'Teléfono', en: 'Phone' },
-  'contact.email': { es: 'Correo electrónico (opcional)', en: 'Email (optional)' },
+  'contact.email': { es: 'Correo electrónico', en: 'Email' },
   'contact.message': { es: 'Tu mensaje', en: 'Your message' },
   'contact.submit': { es: 'Enviar solicitud', en: 'Send request' },
   'contact.whatsapp': { es: 'Contactar por WhatsApp', en: 'Contact via WhatsApp' },
