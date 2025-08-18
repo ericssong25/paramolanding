@@ -20,8 +20,8 @@ const translations: Translations = {
   // Hero
   'hero.title.prefix': { es: 'No es solo', en: "It's not just" },
   'hero.subtitle': {
-    es: 'Creamos experiencias digitales extraordinarias que transforman marcas, cautivan audiencias y potencian el crecimiento mediante innovación estratégica y excelencia creativa.',
-    en: 'We craft extraordinary digital experiences that transform brands, captivate audiences, and drive growth through strategic innovation and creative excellence.',
+    es: 'En <span class="font-creato text-[#dc89ff] underline decoration-[#dc89ff]/40 underline-offset-4">Páramo Creativo</span>, creamos experiencias digitales extraordinarias que transforman marcas, cautivan audiencias y potencian el crecimiento mediante innovación estratégica y excelencia creativa.',
+    en: 'At <span class="font-creato text-[#dc89ff] underline decoration-[#dc89ff]/40 underline-offset-4">Páramo Creativo</span>, we craft extraordinary digital experiences that transform brands, captivate audiences, and drive growth through strategic innovation and creative excellence.',
   },
   'hero.ctaPrimary': { es: 'Comienza tu proyecto', en: 'Start your project' },
   'hero.scroll': { es: 'desplázate para explorar', en: 'scroll to explore' },
@@ -107,19 +107,19 @@ const translations: Translations = {
   // FAQ
   'faq.title': { es: 'Preguntas frecuentes', en: 'Frequently asked questions' },
   'faq.subtitle': { es: 'Resolvemos dudas sobre alcances, tiempos y forma de trabajo.', en: 'Answers about scope, timelines and how we work.' },
-  // FAQ items (1..7)
-  'faq.q1': { es: '¿Qué tipo de aplicaciones desarrollan?', en: 'What types of applications do you build?' },
-  'faq.a1': { es: 'Creamos sitios y apps web, móviles y de escritorio: inventarios, reservaciones hoteleras, sistemas de turnos, CRMs, gestión de proyectos, e‑commerce, landing pages y más.', en: 'We build web, mobile and desktop apps: inventory systems, hotel bookings, appointment systems, CRMs, project management, e‑commerce, landing pages and more.' },
-  'faq.q2': { es: '¿Cómo trabajan y qué metodología usan?', en: 'How do you work and what methodology do you use?' },
-  'faq.a2': { es: 'Usamos enfoques ágiles (Scrum/Kanban). Trabajamos por sprints cortos, demos semanales y comunicación abierta para iterar rápido y con transparencia.', en: 'We follow agile (Scrum/Kanban) with short sprints, weekly demos and open communication to iterate quickly and transparently.' },
-  'faq.q3': { es: '¿Cuáles son los tiempos de entrega?', en: 'What are the delivery timelines?' },
-  'faq.a3': { es: 'Dependen del alcance. Definimos hitos claros y un roadmap al iniciar. Para obtener una estimación personalizada, <a href="#contact" class="inline-block text-[#dc89ff] font-semibold underline underline-offset-2 decoration-white/40 hover:decoration-transparent hover:text-white transition-colors">contáctanos aquí</a>.', en: 'It depends on scope. We define clear milestones and a roadmap at kickoff. For a tailored estimate, <a href="#contact" class="inline-block text-[#dc89ff] font-semibold underline underline-offset-2 decoration-white/40 hover:decoration-transparent hover:text-white transition-colors">contact us here</a>.' },
-  'faq.q4': { es: '¿Qué servicios de marketing ofrecen?', en: 'What marketing services do you offer?' },
-  'faq.a4': { es: 'Estrategia de contenido, SEO/SEM, email marketing y campañas en redes: desde propuesta de valor hasta calendario editorial y optimización continua.', en: 'Content strategy, SEO/SEM, email marketing and social campaigns—from value proposition to editorial calendar and ongoing optimization.' },
-  'faq.q5': { es: '¿Pueden ayudar con diseño gráfico y branding?', en: 'Can you help with graphic design and branding?' },
-  'faq.a5': { es: 'Sí. Identidad visual, guías de estilo, material publicitario y assets para redes con consistencia de marca.', en: 'Yes. Visual identity, brand guidelines, marketing collateral and social assets with consistent branding.' },
-  'faq.q7': { es: '¿Cómo gestionan la estrategia de contenido?', en: 'How do you manage content strategy?' },
-  'faq.a7': { es: 'Investigamos audiencia, definimos tono y pilares de contenido y plan multicanal con analítica para iterar lo que funciona.', en: 'We research audience, define tone and content pillars, build a multichannel plan and iterate using analytics.' },
+  // FAQ items (1..6)
+  'faq.q1': { es: '¿Ofrecen facilidades de pago?', en: 'Do you offer payment facilities?' },
+  'faq.a1': { es: 'Sí, permitimos pagos en cuotas para proyectos como páginas web o aplicaciones. Dependiendo del coste final del proyecto, se solicitará un pago inicial. Luego de eso se evaluará la cantidad de cuotas y el monto de cada una.', en: 'Yes, we allow installment payments for projects like websites or applications. Depending on the final cost of the project, an initial payment will be required. After that, the number of installments and the amount of each one will be evaluated.' },
+  'faq.q2': { es: '¿Cómo comienzo a trabajar con ustedes?', en: 'How do I start working with you?' },
+  'faq.a2': { es: 'Escríbenos por alguno de nuestros medios de contacto para agendar la primera reunión sin costo y allí te explicamos cómo comenzar. Puedes escribirnos por WhatsApp o llenar el formulario de contacto.', en: 'Write to us through any of our contact channels to schedule the first free meeting and there we will explain how to start. You can write to us via WhatsApp or fill out the contact form.' },
+  'faq.q3': { es: '¿Trabajan con cualquier tipo de cliente?', en: 'Do you work with any type of client?' },
+  'faq.a3': { es: 'Sí, tenemos experiencia trabajando con diferentes nichos, así que sabemos cómo crear una estrategia efectiva para tu negocio, sea cuál sea.', en: 'Yes, we have experience working with different niches, so we know how to create an effective strategy for your business, whatever it may be.' },
+  'faq.q4': { es: '¿Qué tipo de aplicaciones desarrollan?', en: 'What types of applications do you build?' },
+  'faq.a4': { es: 'Creamos sitios y apps web, móviles y de escritorio: inventarios, reservaciones hoteleras, sistemas de turnos, CRMs, gestión de proyectos, e‑commerce, landing pages y más.', en: 'We build web, mobile and desktop apps: inventory systems, hotel bookings, appointment systems, CRMs, project management, e‑commerce, landing pages and more.' },
+  'faq.q5': { es: '¿Cuáles son los tiempos de entrega?', en: 'What are the delivery timelines?' },
+  'faq.a5': { es: 'Dependen del alcance. Definimos hitos claros y un roadmap al iniciar. Para obtener una estimación personalizada, <a href="#contact" class="inline-block text-[#dc89ff] font-semibold underline underline-offset-2 decoration-white/40 hover:decoration-transparent hover:text-white transition-colors">contáctanos aquí</a>.', en: 'It depends on scope. We define clear milestones and a roadmap at kickoff. For a tailored estimate, <a href="#contact" class="inline-block text-[#dc89ff] font-semibold underline underline-offset-2 decoration-white/40 hover:decoration-transparent hover:text-white transition-colors">contact us here</a>.' },
+  'faq.q6': { es: '¿Cómo gestionan la estrategia de contenido?', en: 'How do you manage content strategy?' },
+  'faq.a6': { es: 'Investigamos audiencia, definimos tono y pilares de contenido y plan multicanal con analítica para iterar lo que funciona.', en: 'We research audience, define tone and content pillars, build a multichannel plan and iterate using analytics.' },
 
   // Contact
   'contact.title': { es: 'Hablemos de tu proyecto', en: 'Let’s talk about your project' },

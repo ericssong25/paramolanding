@@ -38,7 +38,6 @@ const Header: React.FC = () => {
               className="h-8 w-8 rounded-md object-contain select-none"
               draggable={false}
             />
-            <h1 className="text-2xl font-bold text-[#12173b] font-creato">{t('header.brand')}</h1>
           </div>
           
           <nav className="hidden md:flex space-x-8">

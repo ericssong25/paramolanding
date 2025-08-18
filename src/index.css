@@ -1,4 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+/* Fuentes personalizadas - Creato Display y Garet */
+
+/* Creato Display */
+@font-face {
+  font-family: 'Creato Display';
+  src: url('/fonts/CreatoDisplay-Regular.woff2') format('woff2'),
+       url('/fonts/CreatoDisplay-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Creato Display';
+  src: url('/fonts/CreatoDisplay-Medium.woff2') format('woff2'),
+       url('/fonts/CreatoDisplay-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Creato Display';
+  src: url('/fonts/CreatoDisplay-Bold.woff2') format('woff2'),
+       url('/fonts/CreatoDisplay-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Garet */
+@font-face {
+  font-family: 'Garet';
+  src: url('/fonts/Garet-Book.woff2') format('woff2'),
+       url('/fonts/Garet-Book.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Garet';
+  src: url('/fonts/Garet-Book.woff2') format('woff2'),
+       url('/fonts/Garet-Book.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Garet';
+  src: url('/fonts/Garet-Heavy.woff2') format('woff2'),
+       url('/fonts/Garet-Heavy.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Ejemplo: Si quieres usar otras fuentes, reemplaza la línea de arriba con tu import */
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap'); */
 
 @tailwind base;
 @tailwind components;
@@ -6,11 +64,11 @@
 
 /* Font classes */
 .font-creato {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Creato Display', serif;
 }
 
 .font-garet {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Garet', sans-serif;
 }
 
 /* Particle system background */
@@ -175,4 +233,52 @@ img {
   100% {
     transform: translate3d(-28px, 24px, 0) scale(1);
   }
+}
+
+/* Floating animation for team cards */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-6px) rotate(0.5deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-4px) rotate(-0.5deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Staggered animation delays for team cards */
+.animate-float:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.animate-float:nth-child(2) {
+  animation-delay: 2s;
+}
+
+.animate-float:nth-child(3) {
+  animation-delay: 4s;
+}
+
+/* Smooth hover animation that works with float */
+@keyframes gentlePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-gentle-pulse {
+  animation: gentlePulse 2s ease-in-out infinite;
 }

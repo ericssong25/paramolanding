@@ -356,9 +356,8 @@ const Hero: React.FC = () => {
             <p 
               ref={subheadingRef}
               className="text-xl text-white/90 leading-relaxed max-w-3xl mb-10 font-garet"
-            >
-              {t('hero.subtitle')}
-            </p>
+              dangerouslySetInnerHTML={{ __html: t('hero.subtitle') }}
+            />
 
             <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 mb-12">
               <a href="#contact" className="group bg-gradient-to-r from-[#7546ed] to-[#dc89ff] text-white px-8 py-4 rounded-full hover:from-[#8b66ff] hover:to-[#f0a7ff] hover:brightness-110 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 font-medium text-lg shadow-2xl">
