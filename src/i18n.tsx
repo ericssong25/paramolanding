@@ -64,15 +64,15 @@ const translations: Translations = {
 
   // CTA Section
   'cta.title': { es: '¿Listo para transformar tu presencia digital?', en: 'Ready to transform your digital presence?' },
-  'cta.subtitle': { es: 'Únete a cientos de clientes satisfechos que han elevado sus marcas con nuestras soluciones digitales integrales.', en: 'Join hundreds of satisfied clients who have elevated their brands with our comprehensive digital solutions.' },
+  'cta.subtitle': { es: 'Trabaja con un equipo comprometido y dedicado a ofrecer una experiencia impecable y satisfactoria que eleve tu marca al siguiente nivel.', en: 'Work with a committed team dedicated to delivering an impeccable and satisfying experience that elevates your brand to the next level.' },
   'cta.primary': { es: 'Comienza tu proyecto hoy', en: 'Start your project today' },
   'cta.secondary': { es: 'Agenda una llamada', en: 'Schedule a call' },
   'cta.note': { es: 'Sin compromiso • Consultoría gratuita • Tiempo de respuesta rápido', en: 'No commitment • Free consultation • Quick response time' },
 
   // Footer
   'footer.company.about': {
-    es: 'Somos una agencia digital integral dedicada a transformar negocios mediante diseño innovador, marketing estratégico y desarrollo de vanguardia.',
-    en: 'We are a full‑service digital agency transforming businesses through innovative design, strategic marketing, and cutting‑edge development.',
+    es: 'Somos más que una agencia: somos una plataforma donde creadores, ideas rebeldes y negocios con sueños grandes se unen para construir marcas memorables desde la creatividad, la honestidad y la libertad.',
+    en: 'We are more than an agency: we are a platform where creators, rebellious ideas and businesses with big dreams come together to build memorable brands from creativity, honesty and freedom.',
   },
   'footer.services': { es: 'Servicios', en: 'Services' },
   'footer.getStarted': { es: 'Comenzar', en: 'Get started' },
@@ -119,7 +119,7 @@ const translations: Translations = {
   'faq.q5': { es: '¿Cuáles son los tiempos de entrega?', en: 'What are the delivery timelines?' },
   'faq.a5': { es: 'Dependen del alcance. Definimos hitos claros y un roadmap al iniciar. Para obtener una estimación personalizada, <a href="#contact" class="inline-block text-[#dc89ff] font-semibold underline underline-offset-2 decoration-white/40 hover:decoration-transparent hover:text-white transition-colors">contáctanos aquí</a>.', en: 'It depends on scope. We define clear milestones and a roadmap at kickoff. For a tailored estimate, <a href="#contact" class="inline-block text-[#dc89ff] font-semibold underline underline-offset-2 decoration-white/40 hover:decoration-transparent hover:text-white transition-colors">contact us here</a>.' },
   'faq.q6': { es: '¿Cómo gestionan la estrategia de contenido?', en: 'How do you manage content strategy?' },
-  'faq.a6': { es: 'Investigamos audiencia, definimos tono y pilares de contenido y plan multicanal con analítica para iterar lo que funciona.', en: 'We research audience, define tone and content pillars, build a multichannel plan and iterate using analytics.' },
+  'faq.a6': { es: 'Desarrollamos una estrategia integral: investigamos tu audiencia objetivo, definimos el tono de voz y pilares temáticos, creamos un plan multicanal y optimizamos continuamente basándonos en métricas de rendimiento.', en: 'We develop a comprehensive strategy: research your target audience, define voice tone and thematic pillars, create a multichannel plan and continuously optimize based on performance metrics.' },
 
   // Contact
   'contact.title': { es: 'Hablemos de tu proyecto', en: 'Let’s talk about your project' },
@@ -156,10 +156,7 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     localStorage.setItem('lang', lang);
     document.documentElement.lang = lang;
-    // Forzar re-render global y refresco suave para textos estáticos fuera de React
-    // (e.g., título del documento o formularios detectados en build)
-    // Evitamos recarga completa si no es necesario.
-    // window.location.reload(); // opción dura; preferimos dispatch de evento
+    // Dispatch evento para componentes que necesiten reaccionar al cambio
     window.dispatchEvent(new Event('i18n:changed'));
   }, [lang]);
 
@@ -169,8 +166,9 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
     toggleLang: () => {
       const next = lang === 'es' ? 'en' : 'es';
       setLang(next);
-      // recarga completa solicitada
-      setTimeout(() => window.location.reload(), 0);
+      // Cambio dinámico sin recarga
+      document.documentElement.lang = next;
+      localStorage.setItem('lang', next);
     },
     t: (key) => translations[key]?.[lang] ?? String(key),
   }), [lang]);

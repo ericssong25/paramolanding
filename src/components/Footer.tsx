@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
           <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-12 mb-12">
             {/* Información de la empresa */}
             <div className="lg:col-span-2">
-              <h3 className="text-2xl font-bold font-['Playfair_Display'] mb-4">Páramo Creativo</h3>
+              <h3 className="text-2xl font-bold font-creato mb-4">Páramo Creativo</h3>
               <p className="text-gray-300 mb-6 leading-relaxed max-w-md font-garet">
                 {t('footer.company.about')}
               </p>
