@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { Briefcase, Palette, Code2 } from 'lucide-react';
+import { Briefcase, Palette, Code2, Users, Palette as PaletteIcon } from 'lucide-react';
 import { useI18n } from '../i18n';
 
 type TeamMember = {
@@ -40,6 +40,24 @@ const team: TeamMember[] = [
     initials: 'EG',
     Icon: Code2,
     image: '/images/team/eric.webp',
+  },
+  {
+    name: 'Yheilyn Roa',
+    role: 'Community Manager',
+    bio: '',
+    gradient: 'from-[#ff6b6b] to-[#ffa500]',
+    initials: 'YR',
+    Icon: Users,
+    image: '/images/team/yheilyn.webp',
+  },
+  {
+    name: 'Sara Duque',
+    role: 'Graphic designer',
+    bio: '',
+    gradient: 'from-[#4ecdc4] to-[#44a08d]',
+    initials: 'SD',
+    Icon: PaletteIcon,
+    image: '/images/team/sara.webp',
   },
 ];
 
@@ -131,7 +149,11 @@ const About: React.FC = () => {
                         ? t('about.role.pm')
                         : name === 'Gabriela Delgado'
                         ? t('about.role.designer')
-                        : t('about.role.dev')}
+                        : name === 'Ericsson Giannangeli'
+                        ? t('about.role.dev')
+                        : name === 'Yheilyn Roa'
+                        ? t('about.role.cm')
+                        : t('about.role.designer2')}
                     </span>
                   </div>
                 </div>
@@ -141,7 +163,11 @@ const About: React.FC = () => {
                     ? t('about.bio.pm')
                     : name === 'Gabriela Delgado'
                     ? t('about.bio.designer')
-                    : t('about.bio.dev')}
+                    : name === 'Ericsson Giannangeli'
+                    ? t('about.bio.dev')
+                    : name === 'Yheilyn Roa'
+                    ? t('about.bio.cm')
+                    : t('about.bio.designer2')}
                 </p>
 
                 {/* hover lift */}
