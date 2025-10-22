@@ -13,11 +13,16 @@ import Contact from './components/Contact';
 import CTASection from './components/CTASection';
 import Footer from './components/Footer';
 import CTAInline from './components/CTAInline';
+import { useClarity } from './hooks/useClarity';
+import { getClarityConfig } from './config/clarity';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 function App() {
   const mainRef = useRef<HTMLDivElement>(null);
+  
+  // Inicializar Microsoft Clarity
+  const { trackEvent, trackConversion, isReady } = useClarity(getClarityConfig());
 
   useEffect(() => {
     // Desplazamiento suave al cargar
@@ -29,10 +34,18 @@ function App() {
       { opacity: 1, duration: 1, ease: "power2.out" }
     );
 
+    // Trackear vista de página cuando Clarity esté listo
+    if (isReady) {
+      trackEvent('page_view', {
+        page: 'home',
+        timestamp: new Date().toISOString()
+      });
+    }
+
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [isReady, trackEvent]);
 
   return (
     <div ref={mainRef} className="bg-white text-gray-900 overflow-x-hidden">

@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:survey": "vite --config apps/survey/vite.config.ts",
+    "build:survey": "vite build --config apps/survey/vite.config.ts",
+    "preview:survey": "vite preview --config apps/survey/vite.config.ts"
   },
   "dependencies": {
     "gsap": "^3.13.0",

@@ -1,12 +1,15 @@
 import React from 'react';
 import { useI18n } from '../i18n';
 import { Send, Phone } from 'lucide-react';
+import { useClarity } from '../hooks/useClarity';
+import { getClarityConfig, CLARITY_CONFIG } from '../config/clarity';
 
 const WHATSAPP_NUM = '+56959843111';
 const NETLIFY_NOTIFICATION_EMAIL = 'ericssongiannangeli@gmail.com';
 
 const Contact: React.FC = () => {
   const { t } = useI18n();
+  const { trackEvent, trackConversion } = useClarity(getClarityConfig());
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -39,15 +42,40 @@ const Contact: React.FC = () => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: payload.toString(),
       });
+      
+      // Trackear conversión exitosa
+      trackConversion(CLARITY_CONFIG.CONVERSIONS.CONTACT_FORM, 1);
+      trackEvent(CLARITY_CONFIG.EVENTS.FORM_SUBMISSION, {
+        form_type: 'contact',
+        success: true,
+        timestamp: new Date().toISOString()
+      });
+      
       form.reset();
       window.location.href = '/gracias';
     } catch (err) {
       console.error(err);
+      
+      // Trackear error en el formulario
+      trackEvent(CLARITY_CONFIG.EVENTS.FORM_SUBMISSION, {
+        form_type: 'contact',
+        success: false,
+        error: 'network_error',
+        timestamp: new Date().toISOString()
+      });
+      
       alert('Ocurrió un error al enviar. Intenta nuevamente.');
     }
   };
 
   const waHref = `https://wa.me/56${WHATSAPP_NUM.replace(/[^\d]/g, '').slice(-9)}?text=${encodeURIComponent('Hola, me gustaría hablar sobre un proyecto.')}`;
+  
+  const handleWhatsAppClick = () => {
+    trackEvent(CLARITY_CONFIG.EVENTS.WHATSAPP_CLICK, {
+      source: 'contact_form',
+      timestamp: new Date().toISOString()
+    });
+  };
 
   return (
     <section id="contact" className="py-24 bg-white">
@@ -90,7 +118,7 @@ const Contact: React.FC = () => {
               <button type="submit" className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#7546ed] to-[#dc89ff] text-white px-6 py-3 rounded-full font-semibold hover:from-[#8b66ff] hover:to-[#f0a7ff] transition-colors">
                 <Send className="w-4 h-4" /> {t('contact.submit')}
               </button>
-              <a href={waHref} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-[#7546ed] text-[#7546ed] hover:bg-[#7546ed] hover:text-white transition-colors">
+              <a href={waHref} target="_blank" rel="noreferrer" onClick={handleWhatsAppClick} className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-[#7546ed] text-[#7546ed] hover:bg-[#7546ed] hover:text-white transition-colors">
                 <Phone className="w-4 h-4" /> {t('contact.whatsapp')}
               </a>
             </div>
