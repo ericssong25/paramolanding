@@ -91,6 +91,8 @@ const translations: Translations = {
   'about.role.pm': { es: 'Jefe de proyecto', en: 'Project manager' },
   'about.role.designer': { es: 'Diseñadora gráfica', en: 'Graphic designer' },
   'about.role.dev': { es: 'Desarrollador', en: 'Developer' },
+  'about.role.cm': { es: 'Community Manager', en: 'Community Manager' },
+  'about.role.designer2': { es: 'Diseñadora gráfica', en: 'Graphic designer' },
   'about.bio.pm': {
     es: 'Planifica, coordina y asegura la entrega a tiempo con foco en calidad.',
     en: 'Plans, coordinates and ensures on‑time delivery with a focus on quality.',
@@ -102,6 +104,14 @@ const translations: Translations = {
   'about.bio.dev': {
     es: 'Crea experiencias web rápidas, accesibles y escalables.',
     en: 'Builds fast, accessible and scalable web experiences.',
+  },
+  'about.bio.cm': {
+    es: 'Gestiona y fortalece la presencia digital de las marcas en redes sociales.',
+    en: 'Manages and strengthens brands digital presence on social media.',
+  },
+  'about.bio.designer2': {
+    es: 'Crea diseños visuales impactantes que conectan emocionalmente con la audiencia.',
+    en: 'Creates impactful visual designs that emotionally connect with the audience.',
   },
 
   // FAQ
