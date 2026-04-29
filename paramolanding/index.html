@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    
+    <!-- Favicon y iconos para Google -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Simple SPA fallback for static hosts: redirect full path to hash
+      (function() {
+        // Si el portafolio está deshabilitado, no redirigir rutas de case
+        try {
+          var config = { portfolioEnabled: false };
+          if (!config.portfolioEnabled && window.location.pathname.startsWith('/case/')) {
+            window.location.replace('/');
+            return;
+          }
+        } catch (e) {}
+        var path = window.location.pathname;
+        if (path.startsWith('/case/')) {
+          var newHash = '#' + path;
+          if (window.location.hash !== newHash) {
+            window.location.replace(newHash);
+          }
+        }
+      })();
+    </script>
+    <title>Páramo Creativo - Agencia de marketing</title>
+    
+    <!-- Metadatos para SEO y Google -->
+    <meta name="description" content="Páramo Creativo es una agencia de marketing digital que crea experiencias extraordinarias. Desarrollo web, diseño gráfico, marketing digital y más." />
+    <meta name="keywords" content="agencia de marketing, desarrollo web, diseño gráfico, marketing digital, SEO, SEM, branding, Colombia" />
+    <meta name="author" content="Páramo Creativo" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://agenciaparamo.com/" />
+    <meta property="og:title" content="Páramo Creativo - Agencia de marketing" />
+    <meta property="og:description" content="Creamos experiencias digitales extraordinarias que transforman marcas, cautivan audiencias y potencian el crecimiento." />
+    <meta property="og:image" content="https://agenciaparamo.com/og-image.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://agenciaparamo.com/" />
+    <meta property="twitter:title" content="Páramo Creativo - Agencia de marketing" />
+    <meta property="twitter:description" content="Creamos experiencias digitales extraordinarias que transforman marcas, cautivan audiencias y potencian el crecimiento." />
+    <meta property="twitter:image" content="https://agenciaparamo.com/og-image.jpg" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://agenciaparamo.com/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "ttyi2fszne");
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Hidden Netlify form for build-time detection -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="tel" name="phone" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input type="hidden" name="subject" value="Solicitud de contacto - Páramo Creativo" />
+    </form>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
