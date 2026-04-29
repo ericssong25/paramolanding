@@ -161,7 +161,7 @@ const WorkDetail: React.FC<WorkDetailProps> = ({ slug }) => {
 
             <div data-animate>
               <div className="rounded-3xl overflow-hidden bg-black shadow-2xl shadow-black/20 ring-1 ring-black/10">
-                <img src={work.coverImage} alt={work.title} className="w-full h-auto object-cover" />
+                <img src={work.coverImage} alt={work.title} className="w-full h-auto object-cover max-h-[400px] lg:max-h-[500px]" />
               </div>
             </div>
           </div>

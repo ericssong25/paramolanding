@@ -41,16 +41,7 @@ const team: TeamMember[] = [
     Icon: Code2,
     image: '/images/team/eric.webp',
   },
-  {
-    name: 'Yheilyn Roa',
-    role: 'Community Manager',
-    bio: '',
-    gradient: 'from-[#ff6b6b] to-[#ffa500]',
-    initials: 'YR',
-    Icon: Users,
-    image: '/images/team/yheilyn.webp',
-  },
-  {
+    {
     name: 'Sara Duque',
     role: 'Graphic designer',
     bio: '',
@@ -58,6 +49,33 @@ const team: TeamMember[] = [
     initials: 'SD',
     Icon: PaletteIcon,
     image: '/images/team/sara.webp',
+  },
+  {
+    name: 'Angely López',
+    role: 'Community Manager',
+    bio: '',
+    gradient: 'from-[#ff6b6b] to-[#ff8e53]',
+    initials: 'AL',
+    Icon: Users,
+    image: '/images/team/angely.webp',
+  },
+  {
+    name: 'Milexis Ramírez',
+    role: 'Community Manager',
+    bio: '',
+    gradient: 'from-[#a855f7] to-[#ec4899]',
+    initials: 'MR',
+    Icon: Users,
+    image: '/images/team/milexis.webp',
+  },
+  {
+    name: 'Yorgelis Gutierrez',
+    role: 'Diseñadora Gráfica',
+    bio: '',
+    gradient: 'from-[#06b6d4] to-[#0891b2]',
+    initials: 'YG',
+    Icon: PaletteIcon,
+    image: '/images/team/yorgelis.webp',
   },
 ];
 
@@ -145,28 +163,36 @@ const About: React.FC = () => {
                   <div className="mt-1 inline-flex items-center justify-center gap-2 text-[#7546ed] font-medium group-hover:scale-105 transition-all duration-500">
                     <Icon className="w-4 h-4 group-hover:rotate-12 transition-transform duration-500" />
                     <span>
-                      {name === 'Gabriel Delgado'
+                      { name === 'Gabriel Delgado'
                         ? t('about.role.pm')
                         : name === 'Gabriela Delgado'
                         ? t('about.role.designer')
                         : name === 'Ericsson Giannangeli'
                         ? t('about.role.dev')
-                        : name === 'Yheilyn Roa'
+                        : name === 'Angely López'
                         ? t('about.role.cm')
+                        : name === 'Milexis Ramírez'
+                        ? t('about.role.cm')
+                        : name === 'Yorgelis Gutierrez'
+                        ? t('about.role.designer')
                         : t('about.role.designer2')}
                     </span>
                   </div>
                 </div>
 
                 <p className="text-gray-600 font-garet leading-relaxed mt-2 text-center">
-                  {name === 'Gabriel Delgado'
+                  { name === 'Gabriel Delgado'
                     ? t('about.bio.pm')
                     : name === 'Gabriela Delgado'
                     ? t('about.bio.designer')
                     : name === 'Ericsson Giannangeli'
                     ? t('about.bio.dev')
-                    : name === 'Yheilyn Roa'
+                    : name === 'Angely López'
                     ? t('about.bio.cm')
+                    : name === 'Milexis Ramírez'
+                    ? t('about.bio.cm')
+                    : name === 'Yorgelis Gutierrez'
+                    ? t('about.bio.designer')
                     : t('about.bio.designer2')}
                 </p>
 
