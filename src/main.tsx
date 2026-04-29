@@ -4,21 +4,25 @@ import App from './App.tsx';
 import { I18nProvider } from './i18n';
 import './index.css';
 import CaseStudyWebApp from './pages/CaseStudyWebApp';
+import WorkDetail from './pages/WorkDetail';
 import { FEATURES } from './config';
 
 const RootRouter = () => {
-  const getIsCaseRoute = () => {
+  const getRoute = () => {
     const hash = window.location.hash;
     const path = window.location.pathname;
     if (!FEATURES.portfolioEnabled) return false;
-    return hash === '#/case/web-app' || path === '/case/web-app';
+    if (hash === '#/case/web-app' || path === '/case/web-app') return { type: 'case', slug: 'web-app' } as const;
+    const workMatch = path.match(/^\/work\/([^/]+)\/?$/);
+    if (workMatch) return { type: 'work', slug: workMatch[1] } as const;
+    return false;
   };
 
-  const [isCaseRoute, setIsCaseRoute] = useState<boolean>(getIsCaseRoute());
+  const [route, setRoute] = useState<ReturnType<typeof getRoute>>(getRoute());
 
   useEffect(() => {
-    const onHash = () => setIsCaseRoute(getIsCaseRoute());
-    const onPop = () => setIsCaseRoute(getIsCaseRoute());
+    const onHash = () => setRoute(getRoute());
+    const onPop = () => setRoute(getRoute());
     window.addEventListener('hashchange', onHash);
     window.addEventListener('popstate', onPop);
     return () => {
@@ -27,7 +31,8 @@ const RootRouter = () => {
     };
   }, []);
 
-  if (isCaseRoute) return <CaseStudyWebApp />;
+  if (route && route !== false && route.type === 'case') return <CaseStudyWebApp />;
+  if (route && route !== false && route.type === 'work') return <WorkDetail slug={route.slug} />;
   return <App />;
 };
 

@@ -1,5 +1,5 @@
 export const FEATURES = {
-  portfolioEnabled: false,
+  portfolioEnabled: true,
 };
 
 
