@@ -79,10 +79,6 @@ const Portfolio: React.FC = () => {
                   <h3 className="text-xl sm:text-2xl font-bold text-[#12173b] font-creato group-hover:text-[#7546ed] transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <div className="mt-4 inline-flex items-center gap-2 text-sm text-gray-600 group-hover:text-[#12173b] transition-colors duration-300">
-                    {t('portfolio.viewProject')}
-                    <ArrowUpRight className="w-4 h-4 transform group-hover:rotate-45 transition-transform duration-300" />
-                  </div>
                 </div>
 
                 <div className="absolute inset-0 rounded-3xl ring-1 ring-transparent group-hover:ring-[#7546ed]/15 transition-colors duration-300" />

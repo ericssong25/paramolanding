@@ -34,8 +34,7 @@ export const WORK: WorkItem[] = [
     slug: 'injury-guardians',
     category: 'Redes sociales',
     title: 'Injury Guardians',
-    coverImage:
-      'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=1400',
+    coverImage: '/images/injury-project.png',
     instagramUrl: 'https://instagram.com/injuryguardians',
     sections: [
       {

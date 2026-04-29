@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, ExternalLink, Layers, X } from 'lucide-react';
 import { gsap } from 'gsap';
 import { getWorkBySlug } from '../data/work';
+import LoadingScreen from '../components/LoadingScreen';
+import { useAssetLoader } from '../hooks/useAssetLoader';
 
 type WorkDetailProps = {
   slug: string;
@@ -26,12 +28,24 @@ const WorkDetail: React.FC<WorkDetailProps> = ({ slug }) => {
   const work = useMemo(() => getWorkBySlug(slug), [slug]);
   const containerRef = useRef<HTMLDivElement>(null);
   const [lightbox, setLightbox] = useState<LightboxState>(null);
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
+  const { isLoading, progress, startLoading } = useAssetLoader(work);
 
   useEffect(() => {
+    // Scroll al inicio de la página cuando se navega a un proyecto
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     if (!containerRef.current) return;
     const items = containerRef.current.querySelectorAll('[data-animate]');
     gsap.fromTo(items, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.55, stagger: 0.04, ease: 'power2.out' });
   }, [slug]);
+
+  useEffect(() => {
+    if (work && !assetsLoaded) {
+      startLoading();
+      setAssetsLoaded(true);
+    }
+  }, [work, assetsLoaded, startLoading]);
 
   const navigateHome = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -97,6 +111,16 @@ const WorkDetail: React.FC<WorkDetailProps> = ({ slug }) => {
           <p className="mt-4 text-gray-700 font-garet">Revisa el enlace o vuelve al inicio.</p>
         </div>
       </main>
+    );
+  }
+
+  // Mostrar pantalla de carga mientras se cargan los assets
+  if (isLoading) {
+    return (
+      <LoadingScreen 
+        message="Estamos preparando todo para que visualices el proyecto..."
+        onComplete={() => {}}
+      />
     );
   }
 
